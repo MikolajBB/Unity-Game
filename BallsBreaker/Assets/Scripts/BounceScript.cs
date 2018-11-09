@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BounceScript : MonoBehaviour
 {
-    private const float SPEED = 20f;
+    private const float SPEED = 10f;
     private const float TIME_OFFSET = 0.1f / 32;
     public GameObject Ball;
     private List<GameObject> balls;
@@ -30,6 +30,12 @@ public class BounceScript : MonoBehaviour
                 //TODO - zapytac sie o stala predkosc
             }
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Debug.Log(Input.mousePosition);
+            StartCoroutine(ExecuteAfterTime(0.1f, Input.mousePosition));
+        }
     }
 
 
@@ -41,7 +47,11 @@ public class BounceScript : MonoBehaviour
         {
             yield return new WaitForSeconds(time);
             time += TIME_OFFSET;
-            Vector2 newVelocity = (Camera.main.ScreenPointToRay(position).GetPoint(0) - balls[index].transform.position).normalized * SPEED;
+            Vector2 newVelocity = (Camera.main.ScreenPointToRay(position).GetPoint(0).normalized - balls[index].transform.position).normalized * SPEED;
+            var x = Camera.main.ScreenPointToRay(position).GetPoint(0);
+            var y = x.normalized;
+            var xx = balls[index].transform.position;
+            var yy = xx.normalized;
             balls[index].GetComponent<Rigidbody2D>().velocity = newVelocity;
             index++;
             if (index == balls.Count) break;
@@ -69,4 +79,15 @@ public class BounceScript : MonoBehaviour
             balls.Add(newBall);
         }
     }
+
+    private void OnCollisionWithCubes()
+    {
+       /* var cube = GameObject.FindGameObjectWithTag("Cube");
+        for (int i = 1; i < balls.Count; i++)
+        {
+            if(balls[i].GetComponent<Collider2D>().gameObject.tag == "Cube")
+        }*/
+    }
+
+
 }
