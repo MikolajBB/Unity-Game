@@ -22,6 +22,7 @@ public class BounceScript : MonoBehaviour
 
     void Update()
     {
+        
         foreach (var touch in Input.touches)
         {
             if (touch.phase == TouchPhase.Began)
@@ -33,8 +34,28 @@ public class BounceScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log(Input.mousePosition);
-            StartCoroutine(ExecuteAfterTime(0.1f, Input.mousePosition));
+            int countStoppedBalls = 0;
+            Debug.Log(balls[1].GetComponent<StopBalls>().isFreezed);
+            for(int i=0; i < balls.Count; i++)
+            {
+                if (balls[i].GetComponent<StopBalls>().isFreezed)
+                {
+                    countStoppedBalls++;
+                }
+            }
+            if (countStoppedBalls == balls.Count)
+            {
+
+                Debug.Log(Input.mousePosition);
+                StartCoroutine(ExecuteAfterTime(0.1f, Input.mousePosition));
+                for(int j=0; j < balls.Count; j++)
+                {
+                    Debug.Log("nie wiem co jest");
+                    balls[j].GetComponent<StopBalls>().isFreezed = false;
+                    balls[j].GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                }
+            }
+           
         }
     }
 
@@ -47,11 +68,9 @@ public class BounceScript : MonoBehaviour
         {
             yield return new WaitForSeconds(time);
             time += TIME_OFFSET;
-            Vector2 newVelocity = (Camera.main.ScreenPointToRay(position).GetPoint(0).normalized - balls[index].transform.position).normalized * SPEED;
-            var x = Camera.main.ScreenPointToRay(position).GetPoint(0);
-            var y = x.normalized;
-            var xx = balls[index].transform.position;
-            var yy = xx.normalized;
+            Vector3 clickPosition = Camera.main.ScreenToWorldPoint(position);
+            clickPosition.z = balls[index].transform.position.z;
+            Vector2 newVelocity = (clickPosition - balls[index].transform.position).normalized * SPEED;
             balls[index].GetComponent<Rigidbody2D>().velocity = newVelocity;
             index++;
             if (index == balls.Count) break;
@@ -80,14 +99,7 @@ public class BounceScript : MonoBehaviour
         }
     }
 
-    private void OnCollisionWithCubes()
-    {
-       /* var cube = GameObject.FindGameObjectWithTag("Cube");
-        for (int i = 1; i < balls.Count; i++)
-        {
-            if(balls[i].GetComponent<Collider2D>().gameObject.tag == "Cube")
-        }*/
-    }
 
 
+    
 }
