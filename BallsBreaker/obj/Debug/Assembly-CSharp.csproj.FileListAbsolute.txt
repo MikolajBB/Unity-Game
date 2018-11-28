@@ -339,3 +339,4 @@ C:\Users\roksa\OneDrive\Documents\Studia\semestr 7\Programowanie gier\Unity\Unit
 C:\Users\roksa\OneDrive\Documents\Studia\semestr 7\Programowanie gier\Unity\Unity-Game\BallsBreaker\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\roksa\OneDrive\Documents\Studia\semestr 7\Programowanie gier\Unity\Unity-Game\BallsBreaker\obj\Debug\Assembly-CSharp.dll
 C:\Users\roksa\OneDrive\Documents\Studia\semestr 7\Programowanie gier\Unity\Unity-Game\BallsBreaker\obj\Debug\Assembly-CSharp.pdb
+C:\Users\Mikołaj\Desktop\Studia\Unity-Gra\BallsBreaker\Temp\bin\Debug\Facebook.Unity.Settings.dll
