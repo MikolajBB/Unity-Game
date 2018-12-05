@@ -6,15 +6,14 @@ public class StopBalls : MonoBehaviour {
 
     public bool isFreezed;
 
-	// Use this for initialization
 	void Start () {
         isFreezed = true;
 	}
 	
-	// Update is called once per frame
 	void Update () {
 		
 	}
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Stop")
@@ -59,9 +58,7 @@ public class StopBalls : MonoBehaviour {
                 speed = 1f;
                 isNormalized = true;
             }
-            Debug.Log("Przenoszenie trwa");
         }
-        Debug.Log("Przenoszenie powiodło się");
         isFreezed = true;
     }
 }

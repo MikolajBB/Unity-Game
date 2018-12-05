@@ -7,12 +7,15 @@ public class BounceScript : MonoBehaviour
 {
     private const float SPEED = 10f;
     private const float TIME_OFFSET = 0.1f / 32;
-    private bool firstRun = true;
+
     public GameObject Ball;
-    private List<GameObject> balls;
+    public GameObject Grid;
     public int numberOfBalls;
+
+    private bool firstRun = true;
+    private List<GameObject> balls;
     private Vector2 clickPosition;
-    public Vector2 stopFirstBallPosition = new Vector2(0, 0);
+    private Vector2 stopFirstBallPosition = new Vector2(0, 0);
 
     void Start()
     {
@@ -24,28 +27,16 @@ public class BounceScript : MonoBehaviour
 
     void Update()
     {
-        for (int i = 0; i < balls.Count; i++)
+        if (IsAllBallsStopped() && !firstRun)
         {
-            if (balls[i].GetComponent<StopBalls>().isFreezed)
-            {
-                if (stopFirstBallPosition.x == 0 && stopFirstBallPosition.y == 0)
-                {
-                    stopFirstBallPosition.x = balls[i].GetComponent<Rigidbody2D>().position.x;
-                    stopFirstBallPosition.y = balls[i].GetComponent<Rigidbody2D>().position.y;
-                }
-                else
-                {
-                    //TODO - odmrozic scalic, zamrozic
-                   // Debug.Log("Docelowa pozycja: " + stopFirstBallPosition);
-                    balls[i].GetComponent<StopBalls>().DisableConstraints();
-                    balls[i].GetComponent<StopBalls>().MoveToPosition(stopFirstBallPosition);
-                }
-
-            }
-
+            Grid.GetComponent<MoveChilds>().MoveDown();
         }
+        MoveBallsToFirstBallStopped();
+        OnClickListener();
+    }
 
-
+    private void OnClickListener()
+    {
         foreach (var touch in Input.touches)
         {
             if (touch.phase == TouchPhase.Began)
@@ -56,32 +47,59 @@ public class BounceScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            int countStoppedBalls = 0;
-            for (int i = 0; i < balls.Count; i++)
-            {
-                if (balls[i].GetComponent<StopBalls>().isFreezed)
-                {
-                    countStoppedBalls++;
-                }
-            }
-            Debug.Log("Ilosc zliczonych: " + countStoppedBalls);
-            if (countStoppedBalls == balls.Count)
+            if (IsAllBallsStopped())
             {
                 stopFirstBallPosition = new Vector2(0, 0);
-
-                Debug.Log("Pozycja wyczyszczona" + stopFirstBallPosition);
                 StartCoroutine(ShootBall(0.1f, Input.mousePosition));
                 for (int j = 0; j < balls.Count; j++)
                 {
                     balls[j].GetComponent<StopBalls>().isFreezed = false;
-                    balls[j].GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.None;
+                    firstRun = false;
+                    Grid.GetComponent<MoveChilds>().canMoveDown = true;
                 }
             }
 
         }
     }
 
+    private bool IsAllBallsStopped()
+    {
+        int countStoppedBalls = 0;
+        for (int i = 0; i < balls.Count; i++)
+        {
+            if (balls[i].GetComponent<StopBalls>().isFreezed)
+            {
+                countStoppedBalls++;
+            }
+        }
+        return countStoppedBalls == balls.Count;
+    }
 
+    private void MoveBallsToFirstBallStopped()
+    {
+        for (int i = 0; i < balls.Count; i++)
+        {
+            if (balls[i].GetComponent<StopBalls>().isFreezed)
+            {
+                if (IsFirstBallStopped())
+                {
+                    stopFirstBallPosition = balls[i].GetComponent<Rigidbody2D>().position;
+                }
+                else
+                {
+                    balls[i].GetComponent<StopBalls>().DisableConstraints();
+                    balls[i].GetComponent<StopBalls>().MoveToPosition(stopFirstBallPosition);
+                }
+
+            }
+
+        }
+    }
+
+    private bool IsFirstBallStopped()
+    {
+        return stopFirstBallPosition.x == 0 && stopFirstBallPosition.y == 0;
+    }
 
     IEnumerator ShootBall(float time, Vector2 position)
     {
@@ -99,23 +117,6 @@ public class BounceScript : MonoBehaviour
             index++;
             if (index == balls.Count) break;
         }
-    }
-
-    IEnumerator MoveToStopFirstBallPosition(float time, Vector2 position, int ballIndex)
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(time);
-            balls[ballIndex].GetComponent<Rigidbody2D>().position = Vector2.Lerp(balls[ballIndex].GetComponent<Rigidbody2D>().position, position, time);
-            time += 0.1f;
-            if (time >= 1f)
-            {
-                Debug.Log("Git");
-                break;
-            }
-
-        }
-
     }
 
     private void IgnoreCollisionBetweenBalls()
@@ -138,8 +139,4 @@ public class BounceScript : MonoBehaviour
             balls.Add(newBall);
         }
     }
-
-
-
-
 }
