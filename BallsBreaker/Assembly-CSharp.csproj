@@ -61,9 +61,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\MoveChilds.cs" />
     <Compile Include="Assets\Scripts\BounceScript.cs" />
     <Compile Include="Assets\Scripts\CubeProperties.cs" />
+    <Compile Include="Assets\Scripts\MoveChilds.cs" />
     <Compile Include="Assets\Scripts\StopBalls.cs" />
     <None Include="Assets\BayatGames\Free Platform Game Assets\Readme.txt" />
     <Reference Include="UnityEditor.StandardEvents">
