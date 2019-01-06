@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\BounceScript.cs" />
     <Compile Include="Assets\Scripts\ClickMenuListeners.cs" />
     <Compile Include="Assets\Scripts\CubeProperties.cs" />
+    <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\MoveChilds.cs" />
     <Compile Include="Assets\Scripts\StopBalls.cs" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
