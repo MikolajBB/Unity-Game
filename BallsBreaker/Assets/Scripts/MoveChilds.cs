@@ -10,12 +10,6 @@ public class MoveChilds : MonoBehaviour {
     public GameObject BottomPanel;
     public GameObject GameOver;
 
-	void Start () {
-    }
-	
-	void Update () {
-    }
-
     public void MoveDown()
     {
         if (CheckIfChildIsAboveBottomPanel())
@@ -26,20 +20,14 @@ public class MoveChilds : MonoBehaviour {
                 canMoveDown = false;
             }
         }   
-        else
-        {
-            Debug.Log("Game Over: ");
-        }
     }
 
     private bool CheckIfChildIsAboveBottomPanel()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-
+        
             var offSetBottomPanel = BottomPanel.transform.GetComponent<RectTransform>().anchorMax.y;
-            Debug.Log("Dolny pasek gora: " + BottomPanel.transform.GetComponent<RectTransform>().anchorMin);
-            Debug.Log("Dolny pasek pozycja" + BottomPanel.transform.position);
             if ((transform.GetChild(i).transform.position.y + offSet) <= (BottomPanel.transform.position.y + offSetBottomPanel))
             {
                 GameOver.SetActive(true);

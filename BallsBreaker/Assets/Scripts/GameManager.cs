@@ -20,7 +20,6 @@ public class GameManager : MonoBehaviour {
     {
         if (currentLevel != null)
         {
-            Debug.Log(currentLevel.transform.childCount);
             if(currentLevel.transform.childCount <= 0)
             {
                 Debug.Log("Koniec tej planszy");
@@ -33,5 +32,6 @@ public class GameManager : MonoBehaviour {
         level.SetActive(true);
         BottomPanel.SetActive(true);
         BallCoordinator.SetActive(true);
+        BallCoordinator.GetComponent<BounceScript>().Grid = level;
     }
 }
