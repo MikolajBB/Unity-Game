@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CubeProperties : MonoBehaviour
 {
     public GameObject Cube;
+    public ParticleSystem particleEffect;
     private GameObject textOnCube;
     public int hits;
 
@@ -19,6 +20,10 @@ public class CubeProperties : MonoBehaviour
     {
         if (hits == 0)
         {
+            ParticleSystem explosionEffect = Instantiate(particleEffect);
+            explosionEffect.transform.position = transform.position;
+            explosionEffect.Play();
+            Destroy(particleEffect);
             Destroy(Cube);
         }
     }
