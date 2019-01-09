@@ -16,6 +16,7 @@ public class CubeProperties : MonoBehaviour
         textOnCube.GetComponent<Text>().text = hits.ToString();
     }
 
+
     void Update()
     {
         if (hits == 0)

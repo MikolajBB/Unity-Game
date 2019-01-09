@@ -62,7 +62,7 @@ public class BounceScript : MonoBehaviour
         }
     }
 
-    private bool IsAllBallsStopped()
+    public bool IsAllBallsStopped()
     {
         int countStoppedBalls = 0;
         for (int i = 0; i < balls.Count; i++)
