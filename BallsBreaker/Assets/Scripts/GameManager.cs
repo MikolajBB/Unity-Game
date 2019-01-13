@@ -4,14 +4,45 @@ using UnityEngine.Advertisements;
 
 public class GameManager : MonoBehaviour
 {
-
     public GameObject BottomPanel;
-    public GameObject BallCoordinator;
     public GameObject ChooseLevelPanel;
     public GameObject NextLevelPanel;
+
     public GameObject Parent;
+
+    public GameObject BallCoordinator;
+
+    public GameObject ShieldLeft;
+    public GameObject ShieldRight;
+
     private GameObject currentLevel;
     private GameObject BallCoordinatorCopy;
+
+    void Start()
+    {
+        BallCoordinatorCopy = Instantiate(BallCoordinator);
+    }
+
+    void Update()
+    {
+        if (currentLevel != null)
+        {
+            if (currentLevel.transform.childCount <= 0)
+            {
+                if (BallCoordinator != null)
+                {
+                    if (BallCoordinator.GetComponent<BounceScript>().IsAllBallsStopped())
+                    {
+                        currentLevel.SetActive(false);
+                        BottomPanel.SetActive(false);
+                        BallCoordinator.SetActive(false);
+                        DestroyImmediate(BallCoordinator);
+                        NextLevelPanel.SetActive(true);
+                    }
+                }
+            }
+        }
+    }
 
     public void StartGame(GameObject level)
     {
@@ -27,6 +58,45 @@ public class GameManager : MonoBehaviour
         ShowAdd();
     }
 
+    public void DividePointsOnCubes()
+    {
+        if(currentLevel != null)
+        {
+            Transform[] trs = currentLevel.GetComponentsInChildren<Transform>(true);
+            foreach (Transform t in trs)
+            {
+                if (t.tag == "Cube")
+                {
+                   t.GetComponent<CubeProperties>().DividePoints(2);
+                }
+            }
+        }
+    }
+
+    public void AddBalls(int addBallsNumber)
+    {
+        BallCoordinator.GetComponent<BounceScript>().AddBalls(addBallsNumber);
+    }
+
+    public void ActivateShield()
+    {
+        var ball = BallCoordinator.GetComponent<BounceScript>().Ball;
+        if(!ShieldRight.activeSelf || !ShieldLeft.activeSelf)
+        {
+            var leftRectShield = ShieldLeft.GetComponent<RectTransform>();
+            var rightRectShield = ShieldRight.GetComponent<RectTransform>();
+
+            if (!RectTransformUtility.RectangleContainsScreenPoint(leftRectShield,ball.transform.position))
+            {
+                ShieldLeft.SetActive(true);
+            }
+            else if (!RectTransformUtility.RectangleContainsScreenPoint(rightRectShield, ball.transform.position))
+            {
+                ShieldRight.SetActive(true);
+            }
+        }
+    }
+
     private void ShowAdd()
     {
 
@@ -37,6 +107,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private void StartLeveL(GameObject level)
+    {
+        NextLevelPanel.SetActive(false);
+        ChooseLevelPanel.SetActive(false);
+        level.SetActive(true);
+        BottomPanel.SetActive(true);
+        BallCoordinator.SetActive(true);
+        BallCoordinator.GetComponent<BounceScript>().Grid = level;
+    }
 
     private void HandleShowResult(ShowResult result)
     {
@@ -56,45 +135,9 @@ public class GameManager : MonoBehaviour
                 StartGame(currentLevel);
                 break;
         }
-    }
+    } 
 
-    private void Start()
-    {
-        BallCoordinatorCopy = Instantiate(BallCoordinator);
-    }
-
-    void Update()
-    {
-        if (currentLevel != null)
-        {
-            if (currentLevel.transform.childCount <= 0)
-            {
-                if(BallCoordinator != null)
-                {
-                    if (BallCoordinator.GetComponent<BounceScript>().IsAllBallsStopped())
-                    {
-                        currentLevel.SetActive(false);
-                        BottomPanel.SetActive(false);
-                        BallCoordinator.SetActive(false);
-                        DestroyImmediate(BallCoordinator);
-                        NextLevelPanel.SetActive(true);
-                    }
-                }
-            }
-        }
-    }
-
-    void StartLeveL(GameObject level)
-    {
-        NextLevelPanel.SetActive(false);
-        ChooseLevelPanel.SetActive(false);
-        level.SetActive(true);
-        BottomPanel.SetActive(true);
-        BallCoordinator.SetActive(true);
-        BallCoordinator.GetComponent<BounceScript>().Grid = level;
-    }
-
-    public GameObject FindObject(GameObject parent, string tag)
+    private GameObject FindObject(GameObject parent, string tag)
     {
         Transform[] trs = parent.GetComponentsInChildren<Transform>(true);
         foreach (Transform t in trs)

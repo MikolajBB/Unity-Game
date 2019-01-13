@@ -10,6 +10,9 @@ TagManager:
   - 1
   - 2
   - 3
+  - BallClone
+  - ShieldLeft
+  - ShieldRight
   layers:
   - Default
   - TransparentFX

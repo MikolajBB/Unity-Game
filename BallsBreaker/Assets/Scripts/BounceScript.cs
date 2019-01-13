@@ -10,6 +10,7 @@ public class BounceScript : MonoBehaviour
 
     public GameObject Ball;
     public GameObject Grid;
+    public GameObject BottomPanel;
     public int numberOfBalls;
 
     private bool firstRun = true;
@@ -47,18 +48,22 @@ public class BounceScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            if (IsAllBallsStopped())
-            {
-                stopFirstBallPosition = new Vector2(0, 0);
-                StartCoroutine(ShootBall(0.1f, Input.mousePosition));
-                for (int j = 0; j < balls.Count; j++)
+                if (IsAllBallsStopped())
                 {
-                    balls[j].GetComponent<StopBalls>().isFreezed = false;
-                    firstRun = false;
-                    Grid.GetComponent<MoveChilds>().canMoveDown = true;
+                    Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    var offSetBottomPanel = BottomPanel.transform.GetComponent<RectTransform>().anchorMax.y;
+                 if (clickPosition.y > offSetBottomPanel + BottomPanel.transform.position.y)
+                    {
+                        stopFirstBallPosition = new Vector2(0, 0);
+                        StartCoroutine(ShootBall(0.1f, Input.mousePosition));
+                        for (int j = 0; j < balls.Count; j++)
+                        {
+                            balls[j].GetComponent<StopBalls>().isFreezed = false;
+                            firstRun = false;
+                            Grid.GetComponent<MoveChilds>().canMoveDown = true;
+                        }
+                    }
                 }
-            }
-
         }
     }
 
@@ -67,9 +72,12 @@ public class BounceScript : MonoBehaviour
         int countStoppedBalls = 0;
         for (int i = 0; i < balls.Count; i++)
         {
-            if (balls[i].GetComponent<StopBalls>().isFreezed)
+            if(balls[i] != null)
             {
-                countStoppedBalls++;
+                if (balls[i].GetComponent<StopBalls>().isFreezed)
+                {
+                    countStoppedBalls++;
+                }
             }
         }
         return countStoppedBalls == balls.Count;
@@ -111,7 +119,6 @@ public class BounceScript : MonoBehaviour
 
             Vector3 clickPosition = Camera.main.ScreenToWorldPoint(position);
             clickPosition.z = balls[index].transform.position.z;
-            Vector2 vectorToTest = (clickPosition - balls[index].transform.position).normalized;
             Vector2 newVelocity = (clickPosition - balls[index].transform.position).normalized * SPEED;
             balls[index].GetComponent<Rigidbody2D>().velocity = newVelocity;
             index++;
@@ -137,6 +144,20 @@ public class BounceScript : MonoBehaviour
             Vector2 startPosition = Ball.GetComponent<Rigidbody2D>().position;
             GameObject newBall = Instantiate(Ball, transform);
             balls.Add(newBall);
+        }
+    }
+
+    public void AddBalls(int ballsToAdd)
+    {
+        if (IsAllBallsStopped())
+        {
+            for (int i = 0; i < ballsToAdd; i++)
+            {
+                Vector2 startPosition = Ball.GetComponent<Rigidbody2D>().position;
+                GameObject newBall = Instantiate(Ball, transform);
+                balls.Add(newBall);
+            }
+            IgnoreCollisionBetweenBalls();
         }
     }
 }

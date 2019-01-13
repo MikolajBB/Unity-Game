@@ -511,3 +511,4 @@ C:\Users\Mikołaj\Desktop\Studia\Unity-Gra\Unity-Game\BallsBreaker\obj\Debug\Ass
 C:\Users\Mikołaj\Desktop\Studia\Unity-Gra\Unity-Game\BallsBreaker\obj\Debug\Assembly-CSharp.csproj.CopyComplete
 C:\Users\Mikołaj\Desktop\Studia\Unity-Gra\Unity-Game\BallsBreaker\obj\Debug\Assembly-CSharp.dll
 C:\Users\Mikołaj\Desktop\Studia\Unity-Gra\Unity-Game\BallsBreaker\obj\Debug\Assembly-CSharp.pdb
+C:\Users\Mikołaj\Desktop\Studia\Unity-Gra\Unity-Game\BallsBreaker\Temp\bin\Debug\UnityEngine.Advertisements.dll

@@ -29,9 +29,15 @@ public class CubeProperties : MonoBehaviour
         }
     }
 
+    public void DividePoints(int divider)
+    {
+        this.hits = (int)hits / divider;
+        textOnCube.GetComponent<Text>().text = hits.ToString();
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ball")
+        if (collision.gameObject.tag == "Ball" || collision.gameObject.tag == "BallClone")
         {
             hits--;
             textOnCube.GetComponent<Text>().text = hits.ToString();
