@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CubeProperties : MonoBehaviour
 {
     public GameObject Cube;
+    public ParticleSystem particleEffect;
     private GameObject textOnCube;
     public int hits;
 
@@ -15,17 +16,28 @@ public class CubeProperties : MonoBehaviour
         textOnCube.GetComponent<Text>().text = hits.ToString();
     }
 
+
     void Update()
     {
         if (hits == 0)
         {
+            ParticleSystem explosionEffect = Instantiate(particleEffect);
+            explosionEffect.transform.position = transform.position;
+            explosionEffect.Play();
+            Destroy(particleEffect);
             Destroy(Cube);
         }
     }
 
+    public void DividePoints(int divider)
+    {
+        this.hits = (int)hits / divider;
+        textOnCube.GetComponent<Text>().text = hits.ToString();
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Ball")
+        if (collision.gameObject.tag == "Ball" || collision.gameObject.tag == "BallClone")
         {
             hits--;
             textOnCube.GetComponent<Text>().text = hits.ToString();
