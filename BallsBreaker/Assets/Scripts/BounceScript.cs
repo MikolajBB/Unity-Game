@@ -28,6 +28,13 @@ public class BounceScript : MonoBehaviour
 
     void Update()
     {
+        for(int i = 0; i < balls.Count; i++)
+        {
+            if (!balls[i].GetComponent<StopBalls>().isFreezed)
+            {
+                balls[i].GetComponent<Rigidbody2D>().velocity *= 1.00001f;
+            }
+        }
         if (IsAllBallsStopped() && !firstRun)
         {
             Grid.GetComponent<MoveChilds>().MoveDown();
