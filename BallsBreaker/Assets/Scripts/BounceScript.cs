@@ -14,7 +14,9 @@ public class BounceScript : MonoBehaviour
     public int numberOfBalls;
 
     private bool firstRun = true;
-    private List<GameObject> balls;
+    private bool shouldAddCollectedBalls = false;
+    private int numberOfCollectedBalls = 0;
+    public List<GameObject> balls;
     private Vector2 clickPosition;
     private Vector2 stopFirstBallPosition = new Vector2(0, 0);
 
@@ -28,6 +30,13 @@ public class BounceScript : MonoBehaviour
 
     void Update()
     {
+        if (shouldAddCollectedBalls && IsAllBallsStopped())
+        {
+            AddBalls(numberOfCollectedBalls);
+            numberOfCollectedBalls = 0;
+            shouldAddCollectedBalls = false;
+        }
+
         for (int i = 0; i < balls.Count; i++)
         {
             if (!balls[i].GetComponent<StopBalls>().isFreezed)
@@ -170,5 +179,11 @@ public class BounceScript : MonoBehaviour
             }
             IgnoreCollisionBetweenBalls();
         }
+    }
+
+    public void ShouldAddCollectedBalls(int ballsToAdd)
+    {
+        shouldAddCollectedBalls = true;
+        numberOfCollectedBalls += ballsToAdd;
     }
 }

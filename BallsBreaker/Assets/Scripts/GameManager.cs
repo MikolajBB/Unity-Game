@@ -94,6 +94,11 @@ public class GameManager : MonoBehaviour
         BallCoordinator.SetActive(false);
     }
 
+    public void BackToMenu()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
     #region BONUS
     public void DividePointsOnCubes()
     {
@@ -125,6 +130,11 @@ public class GameManager : MonoBehaviour
             gemsText.SetText(playerGems.ToString());
             BallCoordinator.GetComponent<BounceScript>().AddBalls(addBallsNumber);
         }   
+    }
+
+    public void AddBalls()
+    {
+        BallCoordinator.GetComponent<BounceScript>().ShouldAddCollectedBalls(1);
     }
 
     public void ActivateShield()
