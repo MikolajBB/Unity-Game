@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class GameManager : MonoBehaviour
     public GameObject BottomPanel;
     public GameObject ChooseLevelPanel;
     public GameObject NextLevelPanel;
+    public GameObject GameOverPanel;
 
     public GameObject Parent;
 
@@ -59,8 +61,7 @@ public class GameManager : MonoBehaviour
     public void StartGame(GameObject level)
     {
         currentLevel = level;
-        
-        StartLeveL(level);
+        StartLeveL(currentLevel);
     }
 
     public void NextLevel()
@@ -70,6 +71,30 @@ public class GameManager : MonoBehaviour
         ShowAdd();
     }
 
+    private void StartLeveL(GameObject level)
+    {
+        NextLevelPanel.SetActive(false);
+        ChooseLevelPanel.SetActive(false);
+        GameOverPanel.SetActive(false);
+        level.SetActive(true);
+        BottomPanel.SetActive(true);
+        BallCoordinator.SetActive(true);
+        BallCoordinator.GetComponent<BounceScript>().Grid = currentLevel;
+    }
+
+    public void BackToHome()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void GameOver()
+    {
+        GameOverPanel.SetActive(true);
+        BottomPanel.SetActive(false);
+        BallCoordinator.SetActive(false);
+    }
+
+    #region BONUS
     public void DividePointsOnCubes()
     {
         if(playerGems >= DIVIDE_VALUE)
@@ -126,7 +151,9 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    #endregion BONUS
 
+    #region ADD
     private void ShowAdd()
     {
 
@@ -135,17 +162,7 @@ public class GameManager : MonoBehaviour
             var options = new ShowOptions { resultCallback = HandleShowResult };
             Advertisement.Show("rewardedVideo", options);
         }
-    }
-
-    private void StartLeveL(GameObject level)
-    {
-        NextLevelPanel.SetActive(false);
-        ChooseLevelPanel.SetActive(false);
-        level.SetActive(true);
-        BottomPanel.SetActive(true);
-        BallCoordinator.SetActive(true);
-        BallCoordinator.GetComponent<BounceScript>().Grid = level;
-    }
+    } 
 
     private void HandleShowResult(ShowResult result)
     {
@@ -165,8 +182,8 @@ public class GameManager : MonoBehaviour
                 StartGame(currentLevel);
                 break;
         }
-    } 
-
+    }
+    #endregion ADD
     private GameObject FindObject(GameObject parent, string tag)
     {
         Transform[] trs = parent.GetComponentsInChildren<Transform>(true);

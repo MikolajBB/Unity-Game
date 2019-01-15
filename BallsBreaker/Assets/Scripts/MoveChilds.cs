@@ -8,7 +8,7 @@ public class MoveChilds : MonoBehaviour {
     public float offSet;
     public GameObject Ball;
     public GameObject BottomPanel;
-    public GameObject GameOver;
+    public GameObject GameManager;
 
     public void MoveDown()
     {
@@ -30,7 +30,7 @@ public class MoveChilds : MonoBehaviour {
             var offSetBottomPanel = BottomPanel.transform.GetComponent<RectTransform>().anchorMax.y;
             if ((transform.GetChild(i).transform.position.y + offSet) <= (BottomPanel.transform.position.y + offSetBottomPanel))
             {
-                GameOver.SetActive(true);
+                GameManager.GetComponent<GameManager>().GameOver();
                 return false;
             }
         }

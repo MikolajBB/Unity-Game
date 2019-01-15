@@ -12,6 +12,7 @@ public class CubeProperties : MonoBehaviour
 
     void Start()
     {
+
         textOnCube = transform.Find("Text").gameObject;
         textOnCube.GetComponent<Text>().text = hits.ToString();
     }
@@ -24,9 +25,15 @@ public class CubeProperties : MonoBehaviour
             ParticleSystem explosionEffect = Instantiate(particleEffect);
             explosionEffect.transform.position = transform.position;
             explosionEffect.Play();
-            Destroy(particleEffect);
             Destroy(Cube);
         }
+        /*if (explosionEffect)
+        {
+            if (!explosionEffect.IsAlive())
+            {
+                Destroy(gameObject);
+            }
+        }*/
     }
 
     public void DividePoints(int divider)

@@ -28,7 +28,7 @@ public class BounceScript : MonoBehaviour
 
     void Update()
     {
-        for(int i = 0; i < balls.Count; i++)
+        for (int i = 0; i < balls.Count; i++)
         {
             if (!balls[i].GetComponent<StopBalls>().isFreezed)
             {
@@ -55,22 +55,23 @@ public class BounceScript : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-                if (IsAllBallsStopped())
+            if (IsAllBallsStopped())
+            {
+                Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                var offSetBottomPanel = BottomPanel.transform.GetComponent<RectTransform>().anchorMax.y;
+                if (clickPosition.y > offSetBottomPanel + BottomPanel.transform.position.y)
                 {
-                    Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                    var offSetBottomPanel = BottomPanel.transform.GetComponent<RectTransform>().anchorMax.y;
-                 if (clickPosition.y > offSetBottomPanel + BottomPanel.transform.position.y)
+                    stopFirstBallPosition = new Vector2(0, 0);
+                    StartCoroutine(ShootBall(0.1f, Input.mousePosition));
+                    for (int j = 0; j < balls.Count; j++)
                     {
-                        stopFirstBallPosition = new Vector2(0, 0);
-                        StartCoroutine(ShootBall(0.1f, Input.mousePosition));
-                        for (int j = 0; j < balls.Count; j++)
-                        {
-                            balls[j].GetComponent<StopBalls>().isFreezed = false;
-                            firstRun = false;
-                            Grid.GetComponent<MoveChilds>().canMoveDown = true;
-                        }
+                        balls[j].GetComponent<StopBalls>().isFreezed = false;
+                        balls[j].GetComponent<StopBalls>().isStoppedNextToFirstBall = false;
+                        firstRun = false;
+                        Grid.GetComponent<MoveChilds>().canMoveDown = true;
                     }
                 }
+            }
         }
     }
 
@@ -79,9 +80,9 @@ public class BounceScript : MonoBehaviour
         int countStoppedBalls = 0;
         for (int i = 0; i < balls.Count; i++)
         {
-            if(balls[i] != null)
+            if (balls[i] != null)
             {
-                if (balls[i].GetComponent<StopBalls>().isFreezed)
+                if (balls[i].GetComponent<StopBalls>().isFreezed && balls[i].GetComponent<StopBalls>().isStoppedNextToFirstBall)
                 {
                     countStoppedBalls++;
                 }
@@ -102,8 +103,11 @@ public class BounceScript : MonoBehaviour
                 }
                 else
                 {
-                    balls[i].GetComponent<StopBalls>().DisableConstraints();
-                    balls[i].GetComponent<StopBalls>().MoveToPosition(stopFirstBallPosition);
+                    if (balls[i].GetComponent<StopBalls>().isActiveAndEnabled)
+                    {
+                        balls[i].GetComponent<StopBalls>().DisableConstraints();
+                        balls[i].GetComponent<StopBalls>().MoveToPosition(stopFirstBallPosition);
+                    }
                 }
 
             }
