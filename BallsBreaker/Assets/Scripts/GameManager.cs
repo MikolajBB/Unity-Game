@@ -1,12 +1,18 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject textMesh;
+    private TextMeshProUGUI gemsText;
+
     public GameObject BottomPanel;
     public GameObject ChooseLevelPanel;
     public GameObject NextLevelPanel;
+    public GameObject GameOverPanel;
 
     public GameObject Parent;
 
@@ -18,9 +24,17 @@ public class GameManager : MonoBehaviour
     private GameObject currentLevel;
     private GameObject BallCoordinatorCopy;
 
+    private int playerGems;
+
+    public static int SHIELD_VALUE = 30;
+    public static int ADD_BALLS_VALUE = 10;
+    public static int DIVIDE_VALUE = 50;
+
     void Start()
     {
+        playerGems = PlayerPrefs.GetInt("Gem", 0);
         BallCoordinatorCopy = Instantiate(BallCoordinator);
+        gemsText = textMesh.GetComponent<TextMeshProUGUI>();
     }
 
     void Update()
@@ -47,8 +61,7 @@ public class GameManager : MonoBehaviour
     public void StartGame(GameObject level)
     {
         currentLevel = level;
-        
-        StartLeveL(level);
+        StartLeveL(currentLevel);
     }
 
     public void NextLevel()
@@ -58,45 +71,89 @@ public class GameManager : MonoBehaviour
         ShowAdd();
     }
 
+    private void StartLeveL(GameObject level)
+    {
+        NextLevelPanel.SetActive(false);
+        ChooseLevelPanel.SetActive(false);
+        GameOverPanel.SetActive(false);
+        level.SetActive(true);
+        BottomPanel.SetActive(true);
+        BallCoordinator.SetActive(true);
+        BallCoordinator.GetComponent<BounceScript>().Grid = currentLevel;
+    }
+
+    public void BackToHome()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void GameOver()
+    {
+        GameOverPanel.SetActive(true);
+        BottomPanel.SetActive(false);
+        BallCoordinator.SetActive(false);
+    }
+
+    #region BONUS
     public void DividePointsOnCubes()
     {
-        if(currentLevel != null)
+        if(playerGems >= DIVIDE_VALUE)
         {
-            Transform[] trs = currentLevel.GetComponentsInChildren<Transform>(true);
-            foreach (Transform t in trs)
+            if (currentLevel != null)
             {
-                if (t.tag == "Cube")
+                playerGems -= DIVIDE_VALUE;
+                PlayerPrefs.SetInt("Gem", playerGems);
+                gemsText.SetText(playerGems.ToString());
+                Transform[] trs = currentLevel.GetComponentsInChildren<Transform>(true);
+                foreach (Transform t in trs)
                 {
-                   t.GetComponent<CubeProperties>().DividePoints(2);
+                    if (t.tag == "Cube")
+                    {
+                        t.GetComponent<CubeProperties>().DividePoints(2);
+                    }
                 }
             }
-        }
+        } 
     }
 
     public void AddBalls(int addBallsNumber)
     {
-        BallCoordinator.GetComponent<BounceScript>().AddBalls(addBallsNumber);
+        if(playerGems >= ADD_BALLS_VALUE)
+        {
+            playerGems -= ADD_BALLS_VALUE;
+            PlayerPrefs.SetInt("Gem", playerGems);
+            gemsText.SetText(playerGems.ToString());
+            BallCoordinator.GetComponent<BounceScript>().AddBalls(addBallsNumber);
+        }   
     }
 
     public void ActivateShield()
     {
-        var ball = BallCoordinator.GetComponent<BounceScript>().Ball;
-        if(!ShieldRight.activeSelf || !ShieldLeft.activeSelf)
+        if(playerGems >= SHIELD_VALUE)
         {
-            var leftRectShield = ShieldLeft.GetComponent<RectTransform>();
-            var rightRectShield = ShieldRight.GetComponent<RectTransform>();
+            var ball = BallCoordinator.GetComponent<BounceScript>().Ball;
+            if (!ShieldRight.activeSelf || !ShieldLeft.activeSelf)
+            {
+                var leftRectShield = ShieldLeft.GetComponent<RectTransform>();
+                var rightRectShield = ShieldRight.GetComponent<RectTransform>();
 
-            if (!RectTransformUtility.RectangleContainsScreenPoint(leftRectShield,ball.transform.position))
-            {
-                ShieldLeft.SetActive(true);
-            }
-            else if (!RectTransformUtility.RectangleContainsScreenPoint(rightRectShield, ball.transform.position))
-            {
-                ShieldRight.SetActive(true);
+                if (!RectTransformUtility.RectangleContainsScreenPoint(leftRectShield, ball.transform.position))
+                {
+                    ShieldLeft.SetActive(true);
+                }
+                else if (!RectTransformUtility.RectangleContainsScreenPoint(rightRectShield, ball.transform.position))
+                {
+                    ShieldRight.SetActive(true);
+                }
+                playerGems -= SHIELD_VALUE;
+                PlayerPrefs.SetInt("Gem", playerGems);
+                gemsText.SetText(playerGems.ToString());
             }
         }
     }
+    #endregion BONUS
 
+    #region ADD
     private void ShowAdd()
     {
 
@@ -105,17 +162,7 @@ public class GameManager : MonoBehaviour
             var options = new ShowOptions { resultCallback = HandleShowResult };
             Advertisement.Show("rewardedVideo", options);
         }
-    }
-
-    private void StartLeveL(GameObject level)
-    {
-        NextLevelPanel.SetActive(false);
-        ChooseLevelPanel.SetActive(false);
-        level.SetActive(true);
-        BottomPanel.SetActive(true);
-        BallCoordinator.SetActive(true);
-        BallCoordinator.GetComponent<BounceScript>().Grid = level;
-    }
+    } 
 
     private void HandleShowResult(ShowResult result)
     {
@@ -135,8 +182,8 @@ public class GameManager : MonoBehaviour
                 StartGame(currentLevel);
                 break;
         }
-    } 
-
+    }
+    #endregion ADD
     private GameObject FindObject(GameObject parent, string tag)
     {
         Transform[] trs = parent.GetComponentsInChildren<Transform>(true);
