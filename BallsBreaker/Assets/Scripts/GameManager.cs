@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
     {
         if (currentLevel != null)
         {
-            if (currentLevel.transform.childCount <= 0)
+            if (GetAllCubesFromLevel() == 0)
             {
                 if (BallCoordinator != null)
                 {
@@ -218,5 +218,19 @@ public class GameManager : MonoBehaviour
             }
         }
         return null;
+    }
+
+    private int GetAllCubesFromLevel()
+    {
+        int count = 0;
+        Transform[] trs = currentLevel.transform.GetComponentsInChildren<Transform>(true);
+        foreach (Transform t in trs)
+        {
+            if (t.tag == "Cube")
+            {
+                count++;
+            }
+        }
+        return count;
     }
 }

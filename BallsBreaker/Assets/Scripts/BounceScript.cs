@@ -41,7 +41,7 @@ public class BounceScript : MonoBehaviour
         {
             if (!balls[i].GetComponent<StopBalls>().isFreezed)
             {
-                balls[i].GetComponent<Rigidbody2D>().velocity *= 1.00001f;
+                balls[i].GetComponent<Rigidbody2D>().velocity *= 1.0001f;
             }
         }
         if (IsAllBallsStopped() && !firstRun)
@@ -58,7 +58,23 @@ public class BounceScript : MonoBehaviour
         {
             if (touch.phase == TouchPhase.Began)
             {
-                StartCoroutine(ShootBall(0.1f, touch.position));
+                if (IsAllBallsStopped())
+                {
+                    Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    var offSetBottomPanel = BottomPanel.transform.GetComponent<RectTransform>().anchorMax.y;
+                    if (clickPosition.y > offSetBottomPanel + BottomPanel.transform.position.y)
+                    {
+                        stopFirstBallPosition = new Vector2(0, 0);
+                        StartCoroutine(ShootBall(0.1f, Input.mousePosition));
+                        for (int j = 0; j < balls.Count; j++)
+                        {
+                            balls[j].GetComponent<StopBalls>().isFreezed = false;
+                            balls[j].GetComponent<StopBalls>().isStoppedNextToFirstBall = false;
+                            firstRun = false;
+                            Grid.GetComponent<MoveChilds>().canMoveDown = true;
+                        }
+                    }
+                }
             }
         }
 
@@ -68,7 +84,7 @@ public class BounceScript : MonoBehaviour
             {
                 Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 var offSetBottomPanel = BottomPanel.transform.GetComponent<RectTransform>().anchorMax.y;
-                if (clickPosition.y > offSetBottomPanel + BottomPanel.transform.position.y)
+                if (clickPosition.y > offSetBottomPanel + BottomPanel.transform.position.y + 1)
                 {
                     stopFirstBallPosition = new Vector2(0, 0);
                     StartCoroutine(ShootBall(0.1f, Input.mousePosition));
