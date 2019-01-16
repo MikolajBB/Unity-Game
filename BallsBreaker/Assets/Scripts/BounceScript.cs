@@ -41,7 +41,7 @@ public class BounceScript : MonoBehaviour
         {
             if (!balls[i].GetComponent<StopBalls>().isFreezed)
             {
-                balls[i].GetComponent<Rigidbody2D>().velocity *= 1.0001f;
+                balls[i].GetComponent<Rigidbody2D>().velocity *= 1.001f;
             }
         }
         if (IsAllBallsStopped() && !firstRun)
