@@ -6,9 +6,16 @@ public class MoveChilds : MonoBehaviour {
 
     public bool canMoveDown = true;
     public float offSet;
-    public GameObject Ball;
+    public int additionalBalls = 0;
     public GameObject BottomPanel;
     public GameObject GameManager;
+
+
+    private void Start()
+    {
+        if(additionalBalls > 0)
+            GameManager.GetComponent<GameManager>().AddAdditionalBalls(additionalBalls);
+    }
 
     public void MoveDown()
     {
@@ -26,7 +33,7 @@ public class MoveChilds : MonoBehaviour {
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-        
+            if (transform.GetChild(i).tag == "AddBall") break;
             var offSetBottomPanel = BottomPanel.transform.GetComponent<RectTransform>().anchorMax.y;
             if ((transform.GetChild(i).transform.position.y + offSet) <= (BottomPanel.transform.position.y + offSetBottomPanel))
             {

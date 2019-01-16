@@ -66,9 +66,18 @@ public class GameManager : MonoBehaviour
 
     public void NextLevel()
     {
+
         int nextLvlNum = Int32.Parse(currentLevel.tag) + 1;
-        currentLevel = FindObject(Parent, nextLvlNum.ToString());
-        ShowAdd();
+        if (FindObject(Parent, nextLvlNum.ToString()) == null)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+        else
+        {
+            currentLevel = FindObject(Parent, nextLvlNum.ToString());
+
+            ShowAdd();
+        }  
     }
 
     private void StartLeveL(GameObject level)
@@ -132,9 +141,9 @@ public class GameManager : MonoBehaviour
         }   
     }
 
-    public void AddBalls()
+    public void AddAdditionalBalls(int numberOfBalls)
     {
-        BallCoordinator.GetComponent<BounceScript>().ShouldAddCollectedBalls(1);
+        BallCoordinator.GetComponent<BounceScript>().ShouldAddCollectedBalls(numberOfBalls);
     }
 
     public void ActivateShield()
@@ -181,10 +190,14 @@ public class GameManager : MonoBehaviour
             case ShowResult.Finished:
                 Debug.Log("The ad was successfully shown.");
                 BallCoordinator = BallCoordinatorCopy;
+                var add5Gems = PlayerPrefs.GetInt("Gem", 0) + 5;
+                PlayerPrefs.SetInt("Gem", add5Gems);
                 StartGame(currentLevel);
                 break;
             case ShowResult.Skipped:
                 Debug.Log("The ad was skipped before reaching the end.");
+                BallCoordinator = BallCoordinatorCopy;
+                StartGame(currentLevel);
                 break;
             case ShowResult.Failed:
                 Debug.LogError("The ad failed to be shown.");

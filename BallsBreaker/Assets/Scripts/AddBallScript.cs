@@ -10,7 +10,7 @@ public class AddBallScript : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Ball" || collision.gameObject.tag == "BallClone")
         {
-            GameManager.GetComponent<GameManager>().AddBalls();
+            GameManager.GetComponent<GameManager>().AddAdditionalBalls(1);
             Destroy(gameObject);
         }
         if (collision.gameObject.tag == "Stop")
