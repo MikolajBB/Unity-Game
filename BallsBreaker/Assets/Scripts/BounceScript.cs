@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class BounceScript : MonoBehaviour
 {
-    private const float SPEED = 10f;
+    private const float SPEED = 15f;
     private const float TIME_OFFSET = 0.1f / 32;
 
     public GameObject Ball;
@@ -41,7 +41,7 @@ public class BounceScript : MonoBehaviour
         {
             if (!balls[i].GetComponent<StopBalls>().isFreezed)
             {
-                balls[i].GetComponent<Rigidbody2D>().velocity *= 1.001f;
+                //Time.timeScale += 0.0001f;
             }
         }
         if (IsAllBallsStopped() && !firstRun)
@@ -73,6 +73,8 @@ public class BounceScript : MonoBehaviour
                             firstRun = false;
                             Grid.GetComponent<MoveChilds>().canMoveDown = true;
                         }
+                        Time.timeScale = 1.0f;
+                        Time.fixedDeltaTime = 0.02f * Time.timeScale;
                     }
                 }
             }
