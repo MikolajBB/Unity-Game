@@ -7,6 +7,15 @@ TagManager:
   - Ball
   - Cube
   - Stop
+  - 1
+  - 2
+  - 3
+  - BallClone
+  - ShieldLeft
+  - ShieldRight
+  - AddBall
+  - 4
+  - 5
   layers:
   - Default
   - TransparentFX
@@ -46,4 +55,10 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 573783905
+    locked: 0
+  - name: ForeGround
+    uniqueID: 529021201
     locked: 0

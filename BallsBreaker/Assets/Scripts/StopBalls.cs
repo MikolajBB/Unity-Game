@@ -5,6 +5,7 @@ using UnityEngine;
 public class StopBalls : MonoBehaviour {
 
     public bool isFreezed;
+    public bool isStoppedNextToFirstBall = true;
 
 	void Start () {
         isFreezed = true;
@@ -40,7 +41,8 @@ public class StopBalls : MonoBehaviour {
 
     public void MoveToPosition(Vector2 targetPosition)
     {
-        StartCoroutine(MoveToStopFirstBallPosition(0.1f, 0.005f, targetPosition));
+        if(this.gameObject.activeSelf)
+            StartCoroutine(MoveToStopFirstBallPosition(0.1f, 0.005f, targetPosition));
     }
 
     IEnumerator MoveToStopFirstBallPosition(float time,float speed, Vector2 position)
@@ -49,7 +51,12 @@ public class StopBalls : MonoBehaviour {
         float move = 0.1f;
         while (speed < 1f)
         {
-            if ((Vector2)transform.position == position) break;
+            if ((Vector2)transform.position == position)
+            {
+                isFreezed = true;
+                isStoppedNextToFirstBall = true;
+                break;
+            } 
             yield return new WaitForSeconds(time);
             transform.position = Vector2.Lerp(transform.position, position, move);
             move += speed;
@@ -59,6 +66,5 @@ public class StopBalls : MonoBehaviour {
                 isNormalized = true;
             }
         }
-        isFreezed = true;
     }
 }

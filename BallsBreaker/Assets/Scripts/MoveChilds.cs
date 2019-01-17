@@ -6,14 +6,15 @@ public class MoveChilds : MonoBehaviour {
 
     public bool canMoveDown = true;
     public float offSet;
-    public GameObject Ball;
+    public int additionalBalls = 0;
     public GameObject BottomPanel;
-    public GameObject GameOver;
+    public GameObject GameManager;
 
-	void Start () {
-    }
-	
-	void Update () {
+
+    private void Start()
+    {
+        if(additionalBalls > 0)
+            GameManager.GetComponent<GameManager>().AddAdditionalBalls(additionalBalls);
     }
 
     public void MoveDown()
@@ -26,23 +27,17 @@ public class MoveChilds : MonoBehaviour {
                 canMoveDown = false;
             }
         }   
-        else
-        {
-            Debug.Log("Game Over: ");
-        }
     }
 
     private bool CheckIfChildIsAboveBottomPanel()
     {
         for (int i = 0; i < transform.childCount; i++)
         {
-
+            if (transform.GetChild(i).tag == "AddBall") break;
             var offSetBottomPanel = BottomPanel.transform.GetComponent<RectTransform>().anchorMax.y;
-            Debug.Log("Dolny pasek gora: " + BottomPanel.transform.GetComponent<RectTransform>().anchorMin);
-            Debug.Log("Dolny pasek pozycja" + BottomPanel.transform.position);
-            if ((transform.GetChild(i).transform.position.y + offSet) <= (BottomPanel.transform.position.y + offSetBottomPanel))
+            if ((transform.GetChild(i).transform.position.y + offSet - 0.5f) <= (BottomPanel.transform.position.y + offSetBottomPanel))
             {
-                GameOver.SetActive(true);
+                GameManager.GetComponent<GameManager>().GameOver();
                 return false;
             }
         }
