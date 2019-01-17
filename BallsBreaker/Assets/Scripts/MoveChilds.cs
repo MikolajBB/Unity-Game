@@ -35,7 +35,7 @@ public class MoveChilds : MonoBehaviour {
         {
             if (transform.GetChild(i).tag == "AddBall") break;
             var offSetBottomPanel = BottomPanel.transform.GetComponent<RectTransform>().anchorMax.y;
-            if ((transform.GetChild(i).transform.position.y + offSet) <= (BottomPanel.transform.position.y + offSetBottomPanel))
+            if ((transform.GetChild(i).transform.position.y + offSet - 0.5f) <= (BottomPanel.transform.position.y + offSetBottomPanel))
             {
                 GameManager.GetComponent<GameManager>().GameOver();
                 return false;

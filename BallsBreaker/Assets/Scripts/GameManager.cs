@@ -32,7 +32,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        playerGems = PlayerPrefs.GetInt("Gem", 0);
+        if (!PlayerPrefs.HasKey("Gem"))
+        {
+            PlayerPrefs.SetInt("Gem", 100);
+        }
+        playerGems = PlayerPrefs.GetInt("Gem");
+        
         BallCoordinatorCopy = Instantiate(BallCoordinator);
         gemsText = textMesh.GetComponent<TextMeshProUGUI>();
     }
@@ -101,6 +106,7 @@ public class GameManager : MonoBehaviour
         GameOverPanel.SetActive(true);
         BottomPanel.SetActive(false);
         BallCoordinator.SetActive(false);
+        currentLevel.SetActive(false);
     }
 
     public void BackToMenu()
@@ -194,7 +200,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("The ad was successfully shown.");
                 BallCoordinator = BallCoordinatorCopy;
                 BallCoordinatorCopy = Instantiate(BallCoordinator);
-                var add5Gems = PlayerPrefs.GetInt("Gem", 0) + 5;
+                var add5Gems = PlayerPrefs.GetInt("Gem", 0) + 20;
                 PlayerPrefs.SetInt("Gem", add5Gems);
                 StartGame(currentLevel);
                 break;

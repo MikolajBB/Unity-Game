@@ -40,14 +40,14 @@ MonoBehaviour:
     y: 397
     width: 357
     height: 334
-  m_MinSize: {x: 102, y: 121}
-  m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 11}
+  m_MinSize: {x: 232, y: 271}
+  m_MaxSize: {x: 10002, y: 10021}
+  m_ActualView: {fileID: 12}
   m_Panes:
   - {fileID: 12}
   - {fileID: 11}
-  m_Selected: 1
-  m_LastSelected: 0
+  m_Selected: 0
+  m_LastSelected: 1
 --- !u!114 &3
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -68,10 +68,10 @@ MonoBehaviour:
     y: 0
     width: 357
     height: 731
-  m_MinSize: {x: 202, y: 342}
-  m_MaxSize: {x: 4002, y: 8042}
+  m_MinSize: {x: 232, y: 492}
+  m_MaxSize: {x: 10002, y: 14042}
   vertical: 1
-  controlID: 92
+  controlID: 11
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -157,10 +157,10 @@ MonoBehaviour:
     y: 30
     width: 1536
     height: 731
-  m_MinSize: {x: 683, y: 342}
-  m_MaxSize: {x: 12008, y: 8042}
+  m_MinSize: {x: 711, y: 492}
+  m_MaxSize: {x: 18006, y: 14042}
   vertical: 0
-  controlID: 27
+  controlID: 84
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -179,8 +179,8 @@ MonoBehaviour:
     y: 0
     width: 357
     height: 397
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -232,8 +232,8 @@ MonoBehaviour:
     y: 0
     width: 447
     height: 731
-  m_MinSize: {x: 277, y: 71}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 18}
   m_Panes:
   - {fileID: 18}
@@ -302,34 +302,34 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Scenes
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: "C:\\Users\\Miko\u0142aj\\Desktop\\Studia\\Unity-Gra\\Unity-Game\\BallsBreaker"
+  m_LastProjectPath: C:\Users\roksa\OneDrive\Desktop\unity-game\Unity-Game\BallsBreaker
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 12}
-    m_SelectedIDs: 1a4c0000
-    m_LastClickedID: 19482
-    m_ExpandedIDs: 00000000e2380000383900006a450000d04600006e4800002c4c000000ca9a3b
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 4c3a0000
+    m_LastClickedID: 14924
+    m_ExpandedIDs: 00000000e43800003a3900006c450000d2460000704800002e4c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: 
-      m_OriginalName: 
+      m_Name: Scenes
+      m_OriginalName: Scenes
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 0
+      m_UserData: 14924
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 11
+      m_OriginalEventType: 0
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 2}
     m_SearchString: 
@@ -343,7 +343,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000e2380000383900006a450000d04600006e4800002c4c0000
+    m_ExpandedIDs: 00000000e43800003a3900006c450000d2460000704800002e4c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -368,8 +368,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 904f0000
-    m_LastClickedInstanceID: 20368
+    m_SelectedInstanceIDs: 
+    m_LastClickedInstanceID: 0
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c051dfffa8310000406300004e2b00006a310000e237000000000000542b0000
     m_RenameOverlay:
@@ -395,7 +395,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 73.08173}
+    m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 64
   m_DirectoriesAreaWidth: 155
 --- !u!114 &13
@@ -504,20 +504,20 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 54510000
-    m_LastClickedID: 20820
-    m_ExpandedIDs: 6ae6ffff54f4ffff000000007e4c0000ac4c0000a64e00001c4f0000904f00001e500000685000008250000084500000545100007e51000082510000
+    m_SelectedIDs: 22430000
+    m_LastClickedID: 0
+    m_ExpandedIDs: 6e73f1ff4278f1ff4e79f1ff227af1ff7e7bf1ff8e7bf1ff947bf1ff647ff1ff1080f1ff8480f1ffe481f1fff881f1ff0282f1ff2a89f2ffdc89f2ff568af2ffb28bf2ffc28bf2ffc88bf2ff500bf6ff860bf6ff960bf6ffa232f6ff2ed2f6ffac7bf7ffb27bf7ffcc84f7ffd284f7ffe296f8ffe896f8ffee96f8fff496f8ff3897f8ff5297f8ff5897f8ffe81efaffb021fbff623bfbff0e95fdff0c29feffe25afeff385cfeff905dfeff6e9dfeff509efeffb29ffeff16a1feff14b4feff983dffff9841ffff4442ffffb842ffff1244ffff4644ffff4e44ffff86d1ffffe4d2ffff54d6ffff00d7ffff74d7ffffd4d8ffff0cd9ffff14d9ffff04defffffeeeffff04f4ffff00000000265100002a5100003060000040600000586800008e690000b6690000d6690000e8690000026a0000766a0000a66a0000226b0000346b00007c6b0000be6b0000c86b0000f66b00001eaf0100f0b30100
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: ProgressBarLeft
-      m_OriginalName: ProgressBarLeft
+      m_Name: Text
+      m_OriginalName: Text
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 20700
+      m_UserData: -652386
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
       m_OriginalEventType: 0
@@ -525,7 +525,7 @@ MonoBehaviour:
       m_ClientGUIView: {fileID: 8}
     m_SearchString: 
   m_ExpandedScenes:
-  - Game
+  - Menu
   m_CurrenRootInstanceID: 0
   m_LockTracker:
     m_IsLocked: 0
@@ -556,14 +556,14 @@ MonoBehaviour:
     height: 710
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 0
-  lastFramingTime: 3894.697056696228
+  lastFramingTime: 10363.40875177422
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.9249722, y: -3.1935582, z: 188.91663}
+    m_Target: {x: 0.86223465, y: -1.1630548, z: 0.012109375}
     speed: 2
-    m_Value: {x: 1.9249722, y: -3.1935582, z: 188.91663}
+    m_Value: {x: 0.86223465, y: -1.1630548, z: 0.012109375}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -595,9 +595,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 5.7076807
+    m_Target: 11.058245
     speed: 2
-    m_Value: 5.7076807
+    m_Value: 11.058245
   m_Ortho:
     m_Target: 1
     speed: 2

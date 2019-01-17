@@ -33,7 +33,6 @@ public class IAPTracker : MonoBehaviour, IStoreListener
     private void Awake()
     {
         Instance = this;
-
         if (!PlayerPrefs.HasKey("Gem"))
         {
             PlayerPrefs.SetInt("Gem", 100);
