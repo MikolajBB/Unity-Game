@@ -111,7 +111,8 @@ public class GameManager : MonoBehaviour
     #region BONUS
     public void DividePointsOnCubes()
     {
-        if(playerGems >= DIVIDE_VALUE)
+        playerGems = PlayerPrefs.GetInt("Gem", 0);
+        if (playerGems >= DIVIDE_VALUE)
         {
             if (currentLevel != null)
             {
@@ -132,7 +133,8 @@ public class GameManager : MonoBehaviour
 
     public void AddBalls(int addBallsNumber)
     {
-        if(playerGems >= ADD_BALLS_VALUE)
+        playerGems = PlayerPrefs.GetInt("Gem", 0);
+        if (playerGems >= ADD_BALLS_VALUE)
         {
             playerGems -= ADD_BALLS_VALUE;
             PlayerPrefs.SetInt("Gem", playerGems);
@@ -148,7 +150,8 @@ public class GameManager : MonoBehaviour
 
     public void ActivateShield()
     {
-        if(playerGems >= SHIELD_VALUE)
+        playerGems = PlayerPrefs.GetInt("Gem", 0);
+        if (playerGems >= SHIELD_VALUE)
         {
             var ball = BallCoordinator.GetComponent<BounceScript>().Ball;
             if (!ShieldRight.activeSelf || !ShieldLeft.activeSelf)
@@ -190,6 +193,7 @@ public class GameManager : MonoBehaviour
             case ShowResult.Finished:
                 Debug.Log("The ad was successfully shown.");
                 BallCoordinator = BallCoordinatorCopy;
+                BallCoordinatorCopy = Instantiate(BallCoordinator);
                 var add5Gems = PlayerPrefs.GetInt("Gem", 0) + 5;
                 PlayerPrefs.SetInt("Gem", add5Gems);
                 StartGame(currentLevel);
@@ -197,11 +201,13 @@ public class GameManager : MonoBehaviour
             case ShowResult.Skipped:
                 Debug.Log("The ad was skipped before reaching the end.");
                 BallCoordinator = BallCoordinatorCopy;
+                BallCoordinatorCopy = Instantiate(BallCoordinator);
                 StartGame(currentLevel);
                 break;
             case ShowResult.Failed:
                 Debug.LogError("The ad failed to be shown.");
                 BallCoordinator = BallCoordinatorCopy;
+                BallCoordinatorCopy = Instantiate(BallCoordinator);
                 StartGame(currentLevel);
                 break;
         }
